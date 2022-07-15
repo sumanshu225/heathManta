@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useParams,Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import FoodCard from '../Components/Cards/FoodCard';
+import NotFound from '../Components/Utils/NotFound';
+import Loading from '../Components/Utils/Loading';
 import { fetchFood } from '../functions/fetchFood';
+import YellowHeader from '../Components/Utils/YellowHeader'
 
 
 const FoodCategory = () => {
@@ -8,24 +12,32 @@ const FoodCategory = () => {
   const url = useParams().search;
 
   const [food, setFood] = useState([]);
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
-    fetchFood(url, setFood)
+    window.scrollTo(0, 0)
+    fetchFood(url, setFood, setLoading)
   }, [])
 
 
 
   return (
     <>
-      <div>FoodCategory here</div>
-      <div>
-        {food.length === 0 && <div className="p-4 m-4">Loading...</div>}
-        {food.length > 0 && food.map((ele,ind) => {
-          return (<div className="m-4 p-4 border-2" key={ind}>
-            {ele.recipe.label}
-            <br/>
-            <Link to={{ pathname:`/fooddesc/${ele.recipe.label}` ,state:ele.recipe }}>Explore</Link>
-          </div>)
+      <YellowHeader heading="Food Results" className="my-14" />
+      {/* <FoodCard /> */}
+      <div className="container mx-auto bg-slate-50 border-t  flex flex-wrap items-center justify-center space-y-4 ">
+
+        {/* While Loading Food */}
+        {loading === true && <Loading/>}
+
+        {/* Loading is complte but no result */}
+        {(food.length === 0 && loading === false) && <NotFound/>}
+
+        {food.length > 0 && food.map((ele, ind) => {
+          return (
+            <FoodCard image={ele.recipe.image} key={ind} label={ele.recipe.label} mealtype={ele.recipe.mealType[0]}
+              calories={ele.recipe.calories} link={{ pathname: `/fooddesc/${ele.recipe.label}`, state: ele.recipe }} />)
         })}
 
       </div>

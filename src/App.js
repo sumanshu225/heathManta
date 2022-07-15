@@ -11,6 +11,7 @@ import FoodSearch from './pages/FoodSearch';
 
 
 import Navbar from "./Components/Navbar";
+import Footer from './Components/Footer';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <SubmitReview />
         </Route>
       </Switch>
+      <Footer/>
 
     </>
   );

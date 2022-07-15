@@ -1,59 +1,85 @@
 import React, { useEffect, useState } from 'react'
-import {useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { fetchSimilarExercises } from '../functions/fetchSimilarExercises';
 import { fetchVideo } from '../functions/fetchVideo';
+
+import ItemDesc from '../Components/ItemDesc';
+import SmallCard from '../Components/Cards/SmallCard';
+
+
+import OwlCarousel from 'react-owl-carousel';
+import '../../node_modules/owl.carousel/dist/owl.carousel.min'
+import '../../node_modules/owl.carousel/dist/assets/owl.carousel.css';
+import '../../node_modules/owl.carousel/dist/assets/owl.theme.default.css'
+import YellowHeader from '../Components/Utils/YellowHeader';
+import Ribbon from '../Components/Ribbon';
+import YoutubeCard from '../Components/Cards/YoutubeCard';
+import Loading from '../Components/Utils/Loading';
+import NotFound from '../Components/Utils/NotFound';
 
 const ExerciseDesc = () => {
 
     const [similarExercise, setsimilarExercise] = useState([])
     const [video, setVideo] = useState([])
+    const [loading, setLoading] = useState(true)
     const location = useLocation()
     const exercise = location.state;
-    
-    console.log("Hello" + location.state.name);
+
     useEffect(() => {
+        window.scrollTo(0, 0)
         let temp = fetchSimilarExercises(exercise)
         setsimilarExercise(temp);
-        fetchVideo(exercise.name, setVideo);
-        console.log(video);
-    }, [])
+        fetchVideo(exercise.name, setVideo, setLoading);
+    }, [exercise])
 
     return (
         <>
-            <div>
-                <p className="space-x-4 space-y-4"> {exercise.name} </p>
-                <p className="space-x-4 space-y-4"> {exercise.target} </p>
-                <p className="space-x-4 space-y-4"> {exercise.bodypart} </p>
-                <p className="space-x-4 space-y-4"> {exercise.equipment} </p>
-                <div className="flex flex-wrap">
-
-                    {similarExercise.map((ele,ind) => {
-                        return (<div className="m-3 border-2 p-4" key={ind}>
-                            <p>{ele.name}</p>
-                            <p>{ele.bodyPart}</p>
-                            <p>{ele.bodyPart}</p>
-                            <p>{ele.equipment}</p>
-                        </div>)
-                    })}
-
-                </div>
-
+            {/* Showing Exercise Details */}
+            <YellowHeader heading="Exercise details" className="mt-14" />
+            <ItemDesc exercise={exercise} />
+            {similarExercise.length > 0 &&
                 <div>
-                    {video.length == 0 && <div className="m-8 p-8 text-2xl">Loading...</div>}
-                    {video.length > 0 && video.map((ele,ind) => {
-                        return (<div className="m-8 p-4 border-2" key={ind}>
-                            <a href={`https://www.youtube.com/watch?v=${ele.video.videoId}`} 
-                                target="_blank" rel ="noreferrer" >
-                                {ele.video.description}
-                            </a>
-                            <p>{ele.video.viewCountText}</p>
-                        </div>)
-                    })}
 
+                    <YellowHeader heading="similar Exercise" className="mb-24" />
+
+                    <div className="container mx-auto p-3 bg-gray-300">
+                        <OwlCarousel items={3} autoWidth={true} dots={true} dotsEach={true} dotData={true}>
+                            {similarExercise.map((ele, ind) => {
+                                return <SmallCard key={ind} exercise={ele} link={{ pathname: `/exercise/${ele.target}/${ele.id}`, state: ele }} />
+                            })}
+                        </OwlCarousel>
+                    </div>
                 </div>
+            }
+
+
+
+
+
+            <div>
+                <YellowHeader heading="Suggested Videos" className="lg:my-16 mt-14" />
+                {loading === true && <Loading />}
+                {/* Loading is complte but no result */}
+                {(video.length === 0 && loading === false) && <NotFound />}
+
+                <div className="mb-12 container mx-auto">
+
+                    {video.length > 0 &&
+                        <OwlCarousel items={3} margin={15} autoWidth={true} dots={true} dotsEach={true} dotData={true}>
+                            {video.length > 0 && video.map((ele, ind) => {
+                                return <YoutubeCard key={ind} text={ele.video.description} title={ele.video.title}
+                                    id={ele.video.videoId} viewCount={ele.video.viewCountText} img={ele.video.thumbnails[0].url} />
+                            })}
+
+                        </OwlCarousel>
+                    }
+                </div>
+
 
             </div>
+
+
         </>
     )
 }

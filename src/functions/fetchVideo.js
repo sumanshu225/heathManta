@@ -1,21 +1,22 @@
 import axios from 'axios'
+import { ApiKey } from './ApiKey';
 
-export const fetchVideo = async (params,setVideo) => {
-
+export const fetchVideo = async (params,setVideo,setLoading) => {
+    const searchparameter = params.replace(/ /g, '%20');
     const options = {
         params: {
             type: 'v',
             sort: 'v'
         },
         headers: {
-            'X-RapidAPI-Key': 'd4f3aeff85msha9f5fe3844e0ffdp1313a0jsnf130cb1b56f5',
+            'X-RapidAPI-Key': ApiKey(),
             'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com'
         }
     };
-    console.log(params);
-    axios.get(`https://youtube-search-and-download.p.rapidapi.com/search?query=${params}`,options)
+    axios.get(`https://youtube-search-and-download.p.rapidapi.com/search?query=${searchparameter}`,options)
     .then((response)=>{
         setVideo(response.data.contents);
+        setLoading(false)
     }).catch(error=>{
         console.error(error);
     })
