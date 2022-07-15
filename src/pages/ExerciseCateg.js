@@ -14,7 +14,7 @@ const ExerciseCateg = () => {
   const [exercises, setexercises] = useState([,])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(20);
+  const [postsPerPage] = useState(30);
 
 
   useEffect(() => {

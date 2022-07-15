@@ -28,8 +28,8 @@ const HorizontalCard = (props) => {
                             <span>{props.ele.target}</span>
                         </div>
                     </div>
-                <button className="bg-yellow-400 px-8 text-white font-bold py-1 w-fit mx-auto mt-4 
-                hover:text-yellow-400 border-2 border-yellow-400 transition-all hover:bg-white">
+                <button className="bg-yellow-500 px-8 text-white font-bold py-1 w-fit mx-auto mt-4 
+                hover:text-yellow-500 border-2 border-yellow-500 transition-all hover:bg-white">
                     <Link to={{pathname:`/exercise/${props.ele.target}/${props.ele.id}`, state : props.ele}}>
 
                     View Details

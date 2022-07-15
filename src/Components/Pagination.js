@@ -21,7 +21,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, current, prev, next })
     return (
         <nav>
             <ul className='pagination  flex w-fit mx-auto '>
-                <li className=" py-1 px-3 bg-yellow-400 text-white"
+                <li className=" py-1 px-3 mr-2 bg-yellow-500 text-white"
                     onClick={nextpage} >
                     <i className="fas fa-caret-left"></i>
                 </li>
@@ -29,9 +29,9 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, current, prev, next })
 
                 {pageNumbers.map(number => (
                     <li key={number} onClick={() => paginate(number)}
-                        className={` border border-slate-100 py-1 px-2 cursor-pointer hover:border-yellow-400 
-                            ${current === number ? "border-yellow-400 text-white font-bold bg-yellow-400"
-                                : "border-black hover:text-yellow-400 bg-slate-50"}`}>
+                        className={` border border-slate-100 py-1 px-2 cursor-pointer hover:border-yellow-500 
+                            ${current === number ? "border-yellow-500 text-white font-bold bg-yellow-500"
+                                : "border-slate-100 hover:text-yellow-500 bg-slate-50"}`}>
                         <a  >
                             {number}
                         </a>
@@ -39,7 +39,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, current, prev, next })
                 ))}
 
 
-                <li className=" py-1 px-3 bg-yellow-400 text-white"
+                <li className=" py-1 px-3 ml-2 bg-yellow-500 text-white"
                     onClick={prevpage}>
                     <i className="fas fa-caret-right"></i>
                 </li>

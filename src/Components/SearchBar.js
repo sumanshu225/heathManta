@@ -49,9 +49,9 @@ const SearchBar = (props) => {
 
           {/* Search */}
           <form>
-            <div className="relative lg:w-[40rem] ">
+            <div className="relative lg:w-[40rem] rounded-2xl overscroll-none">
               {/* Input */}
-              <input type="text" className="border-2  rounded-2xl py-1 px-4 
+              <input type="text" className="border-2  py-1 px-4 
              w-full outline-none" ref={searchText} required placeholder={props.message} />
 
               {/* Submit Button */}
