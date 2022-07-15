@@ -8,5 +8,4 @@
 #### FrameWorks Used
 - REACT
 - TAILWIND
-#### Example
-![Food](https://drive.google.com/file/d/13GKlxKu3GyzAyY8O8O4butq_wtnUeUf8/view?usp=sharing)
+
