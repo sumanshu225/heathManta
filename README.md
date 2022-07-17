@@ -1,4 +1,4 @@
-# Fitness Manta
+# [Fitness Manta](https://health-mantra.netlify.app/)
 - ### Provides information to over *1300 exercises* with individual exercise data and animated demonstrations along with YouTube Videos.
 - ### Search over *2 million* recipes 
 #### APIS used 
